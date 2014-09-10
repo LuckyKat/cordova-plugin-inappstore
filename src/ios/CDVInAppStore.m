@@ -29,7 +29,8 @@ THE SOFTWARE.
 
 - (void) open:(CDVInvokedUrlCommand *)command
 {
-    CDVPluginResult *pluginResult = nil;
+    NSLog(@"Open in app store");
+    __block CDVPluginResult *pluginResult = nil;
     NSString *appStoreId = [command.arguments objectAtIndex:0];
     
     SKStoreProductViewController *storeViewController = [[SKStoreProductViewController alloc] init];

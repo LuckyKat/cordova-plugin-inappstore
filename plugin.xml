@@ -15,9 +15,9 @@
     </engines>
     
     <platform name="ios">
-        <!-- <js-module src="www/inappstore.js" name="inappstore">
-            <clobbers target="device" />
-        </js-module> -->
+        <js-module src="www/inappstore.js" name="inappstore">
+            <clobbers target="plugins.inappstore" />
+        </js-module>
         <config-file target="config.xml" parent="/*">
             <feature name="CDVInAppStore">
                 <param name="ios-package" value="CDVInAppStore" />
