@@ -11,31 +11,15 @@
     <repo>https://git-wip-us.apache.org/repos/asf/cordova-plugin-inappbrowser.git</repo>
     
     <engines>
-      <engine name="cordova" version=">=3.0.0" />
+      <engine name="cordova" version=">=3.5.0" />
     </engines>
-
-    <!-- android -->
-    <!-- <platform name="android">
-        <js-module src="www/inappbrowser.js" name="inappbrowser">
-            <clobbers target="window.open" />
-        </js-module>
-        <config-file target="res/xml/config.xml" parent="/*">
-            <feature name="InAppBrowser">
-                <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser"/>
-            </feature>
-        </config-file>
-
-        <source-file src="src/android/InAppBrowser.java" target-dir="src/org/apache/cordova/inappbrowser" />
-
-    </platform> -->
     
-    <!-- ios -->
     <platform name="ios">
-        <js-module src="www/inappstore.js" name="inappstore">
+        <!-- <js-module src="www/inappstore.js" name="inappstore">
             <clobbers target="device" />
-        </js-module>
+        </js-module> -->
         <config-file target="config.xml" parent="/*">
-            <feature name="InAppStore">
+            <feature name="CDVInAppStore">
                 <param name="ios-package" value="CDVInAppStore" />
             </feature>
         </config-file>
