@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+           id="com.creativelicencedigital.cordova.plugin.inappstore"
+      version="1.0.0">
+
+    <name>InAppStore</name>
+    <description>Cordova InAppStore Plugin</description>
+    <license>MIT</license>
+    <keywords>cordova,in,app,store,inappstore,storeproduct</keywords>
+    <repo>https://git-wip-us.apache.org/repos/asf/cordova-plugin-inappbrowser.git</repo>
+    
+    <engines>
+      <engine name="cordova" version=">=3.0.0" />
+    </engines>
+
+    <!-- android -->
+    <!-- <platform name="android">
+        <js-module src="www/inappbrowser.js" name="inappbrowser">
+            <clobbers target="window.open" />
+        </js-module>
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="InAppBrowser">
+                <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser"/>
+            </feature>
+        </config-file>
+
+        <source-file src="src/android/InAppBrowser.java" target-dir="src/org/apache/cordova/inappbrowser" />
+
+    </platform> -->
+    
+    <!-- ios -->
+    <platform name="ios">
+        <js-module src="www/inappstore.js" name="inappstore">
+            <clobbers target="device" />
+        </js-module>
+        <config-file target="config.xml" parent="/*">
+            <feature name="InAppStore">
+                <param name="ios-package" value="CDVInAppStore" />
+            </feature>
+        </config-file>
+
+        <header-file src="src/ios/CDVInAppStore.h" />
+	    <source-file src="src/ios/CDVInAppStore.m" />
+
+	    <framework src="StoreKit.framework" />
+    </platform>
+
+</plugin>
+
