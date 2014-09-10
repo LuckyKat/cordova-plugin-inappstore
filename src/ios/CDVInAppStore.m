@@ -26,27 +26,59 @@ THE SOFTWARE.
 
 @implementation CDVInAppStore
 
-
-- (void) open:(CDVInvokedUrlCommand *)command
+- (void)open:(CDVInvokedUrlCommand *)command
 {
-    NSLog(@"Open in app store");
     __block CDVPluginResult *pluginResult = nil;
     NSString *appStoreId = [command.arguments objectAtIndex:0];
     
     SKStoreProductViewController *storeViewController = [[SKStoreProductViewController alloc] init];
+    storeViewController.delegate = self;
     NSDictionary *params = [NSDictionary dictionaryWithObject:appStoreId forKey:SKStoreProductParameterITunesItemIdentifier];
     
+    UIInAppStoreNavigationController* navigationController = [[UIInAppStoreNavigationController alloc] initWithRootViewController:storeViewController];
+    navigationController.navigationBarHidden = YES;
+
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        storeViewController.modalPresentationStyle = UIModalPresentationFormSheet;
+    }
+
     [storeViewController loadProductWithParameters:params completionBlock:^(BOOL result, NSError *error) {
         if (error) {
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Invalid app store id"];
         } else {
+            [self.viewController presentViewController:navigationController animated:YES completion:nil];
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
         }
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     }];
-
+    
 }
 
 
+# pragma mark - SKStoreProductViewController delegate
+
+- (void)productViewControllerDidFinish:(SKStoreProductViewController *)viewController {
+    [self.viewController dismissViewControllerAnimated:YES completion:NULL];
+}
+
 @end
 
+
+@implementation UIInAppStoreNavigationController
+
+-(BOOL)shouldAutorotate
+{
+    return NO;
+}
+
+-(NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskPortrait;
+}
+
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
+{
+    return UIInterfaceOrientationPortrait;
+}
+
+@end
