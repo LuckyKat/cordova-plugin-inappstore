@@ -3,7 +3,7 @@ cordova-plugin-inappstore
 
 Plugin for displaying an embedded App Store within the wep app.
 
-Prerequisites: A Cordova/PhoneGap 3.5+ project for iOS or Android.
+Prerequisites: A Cordova/PhoneGap 3.5+ project for iOS.
 
 ## Index
 
