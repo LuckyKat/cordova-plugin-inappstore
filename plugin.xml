@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-           id="com.creativelicencedigital.cordova.plugin.inappstore"
+           id="com.cld.cordova.plugin.inappstore"
       version="1.0.0">
 
     <name>InAppStore</name>
@@ -19,7 +19,7 @@
             <clobbers target="plugins.inappstore" />
         </js-module>
         <config-file target="config.xml" parent="/*">
-            <feature name="CDVInAppStore">
+            <feature name="InAppStore">
                 <param name="ios-package" value="CDVInAppStore" />
             </feature>
         </config-file>
