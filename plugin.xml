@@ -19,7 +19,7 @@
             <clobbers target="plugins.inappstore" />
         </js-module>
         <config-file target="config.xml" parent="/*">
-            <feature name="InAppStore">
+            <feature name="CDVInAppStore">
                 <param name="ios-package" value="CDVInAppStore" />
             </feature>
         </config-file>
