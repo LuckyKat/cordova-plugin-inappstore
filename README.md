@@ -23,7 +23,7 @@ To install this plugin, follow the [Command-line Interface Guide](http://cordova
 
 This plugin follows the Cordova 3.0 plugin spec, so it can be installed through the Cordova CLI in your existing Cordova project:
 ```bash
-cordova plugin add git@github.com:Creative-Licence-Digital/cordova-plugin-inappstore.git
+cordova plugin add https://github.com/Creative-Licence-Digital/cordova-plugin-inappstore.git
 ```
 
 ##Usage
@@ -35,4 +35,19 @@ open: function (appStoreId, success, fail)
 ```
 
 ##Example
+
+* params
+ * appStoreId - the id of the app you want to target on the AppStore
+ * success - success callback function
+ * failure - error/fail callback function
+
+```javascript
+success = () =>
+  console.log "success"
+
+failure = (error) =>
+  console.log "error"
+
+window.plugins?.inappstore.open exampleAppStoreId, success, failure
+```
 
