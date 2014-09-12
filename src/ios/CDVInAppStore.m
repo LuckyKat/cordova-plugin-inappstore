@@ -31,27 +31,28 @@ THE SOFTWARE.
     __block CDVPluginResult *pluginResult = nil;
     NSString *appStoreId = [command.arguments objectAtIndex:0];
     
-    SKStoreProductViewController *storeViewController = [[SKStoreProductViewController alloc] init];
-    storeViewController.delegate = self;
-    NSDictionary *params = [NSDictionary dictionaryWithObject:appStoreId forKey:SKStoreProductParameterITunesItemIdentifier];
-    
-    UIInAppStoreNavigationController* navigationController = [[UIInAppStoreNavigationController alloc] initWithRootViewController:storeViewController];
-    navigationController.navigationBarHidden = YES;
-
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        storeViewController.modalPresentationStyle = UIModalPresentationFormSheet;
-    }
-
-    [storeViewController loadProductWithParameters:params completionBlock:^(BOOL result, NSError *error) {
-        if (error) {
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Invalid app store id"];
-        } else {
-            [self.viewController presentViewController:navigationController animated:YES completion:nil];
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    [self.commandDelegate runInBackground:^{
+        SKStoreProductViewController *storeViewController = [[SKStoreProductViewController alloc] init];
+        storeViewController.delegate = self;
+        NSDictionary *params = [NSDictionary dictionaryWithObject:appStoreId forKey:SKStoreProductParameterITunesItemIdentifier];
+        
+        UIInAppStoreNavigationController* navigationController = [[UIInAppStoreNavigationController alloc] initWithRootViewController:storeViewController];
+        navigationController.navigationBarHidden = YES;
+        
+        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+            storeViewController.modalPresentationStyle = UIModalPresentationFormSheet;
         }
-        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-    }];
-    
+        
+        [storeViewController loadProductWithParameters:params completionBlock:^(BOOL result, NSError *error) {
+            if (error) {
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Invalid app store id"];
+            } else {
+                [self.viewController presentViewController:navigationController animated:YES completion:nil];
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+            }
+            [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+        }];
+    }];    
 }
 
 
