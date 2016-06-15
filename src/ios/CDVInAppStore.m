@@ -36,13 +36,6 @@ THE SOFTWARE.
         storeViewController.delegate = self;
         NSDictionary *params = [NSDictionary dictionaryWithObject:appStoreId forKey:SKStoreProductParameterITunesItemIdentifier];
         
-        UIInAppStoreNavigationController* navigationController = [[UIInAppStoreNavigationController alloc] initWithRootViewController:storeViewController];
-        navigationController.navigationBarHidden = YES;
-        
-        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-            storeViewController.modalPresentationStyle = UIModalPresentationFormSheet;
-        }
-        
         [storeViewController loadProductWithParameters:params completionBlock:^(BOOL result, NSError *error) {
             if (error) {
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Invalid app store id"];
