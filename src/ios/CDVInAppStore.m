@@ -34,7 +34,7 @@ THE SOFTWARE.
     NSString *appStoreId = [command.arguments objectAtIndex:0];
     
     [self.commandDelegate runInBackground:^{
-        self.storeViewController = [[SKStoreProductViewController alloc] init];
+        self.storeViewController = [[UIInAppStoreNavigationController alloc] init];
         self.storeViewController.delegate = self;
         NSDictionary *params = [NSDictionary dictionaryWithObject:appStoreId forKey:SKStoreProductParameterITunesItemIdentifier];
         
@@ -63,9 +63,9 @@ THE SOFTWARE.
     return YES;
 }
 
-# pragma mark - SKStoreProductViewController delegate
+# pragma mark - UIInAppStoreNavigationController delegate
 
-- (void)productViewControllerDidFinish:(SKStoreProductViewController *)viewController {
+- (void)productViewControllerDidFinish:(UIInAppStoreNavigationController *)viewController {
     [self.viewController dismissViewControllerAnimated:YES completion:NULL];
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
 }
@@ -75,19 +75,9 @@ THE SOFTWARE.
 
 @implementation UIInAppStoreNavigationController
 
--(BOOL)shouldAutorotate
+- (BOOL)prefersStatusBarHidden
 {
-    return NO;
-}
-
--(NSUInteger)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskPortrait;
-}
-
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
-{
-    return UIInterfaceOrientationPortrait;
+    return YES;
 }
 
 @end

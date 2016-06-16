@@ -25,19 +25,19 @@ THE SOFTWARE.
 #import <Cordova/CDVPlugin.h>
 #import <StoreKit/StoreKit.h>
 
+
+@interface UIInAppStoreNavigationController: SKStoreProductViewController
+
+@end
+
 @interface CDVInAppStore : CDVPlugin <SKStoreProductViewControllerDelegate, UINavigationControllerDelegate> {
 
 }
 
-@property SKStoreProductViewController *storeViewController;
+@property UIInAppStoreNavigationController *storeViewController;
 
 //Public Instance Methods (visible in Cordova API)
 - (void) open:(CDVInvokedUrlCommand *)command;
 - (void) show:(CDVInvokedUrlCommand *)command;
-
-@end
-
-
-@interface UIInAppStoreNavigationController: UINavigationController
 
 @end
