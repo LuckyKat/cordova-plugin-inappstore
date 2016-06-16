@@ -28,10 +28,11 @@ cordova plugin add https://github.com/Creative-Licence-Digital/cordova-plugin-in
 
 ##Usage
 
-Pass the app store id as parameter of the open method.
+Pass the app store id as parameter of the open method. The open method preloads the InAppStore view. The success callback will be called when preloaded. Call the show method after this.
 
 ```javascript
-open: function (appStoreId, success, fail)
+open: function (appStoreId, success, fail),
+show: function ()
 ```
 
 ##Example
@@ -42,12 +43,12 @@ open: function (appStoreId, success, fail)
  * failure - error/fail callback function
 
 ```javascript
-success = () =>
-  console.log "success"
-
-failure = (error) =>
-  console.log "error"
-
-window.plugins?.inappstore.open exampleAppStoreId, success, failure
+window.plugins.inappstore.open('123456789', function () {
+    // success
+    window.plugins.inappstore.show();
+}, function () {
+    // fail
+    alert("Could not open App Store!");
+});
 ```
 
