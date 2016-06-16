@@ -29,9 +29,11 @@ THE SOFTWARE.
 
 }
 
+@property SKStoreProductViewController *storeViewController;
+
 //Public Instance Methods (visible in Cordova API)
 - (void) open:(CDVInvokedUrlCommand *)command;
-- (void) preload:(CDVInvokedUrlCommand *)command;
+- (void) show:(CDVInvokedUrlCommand *)command;
 
 @end
 
