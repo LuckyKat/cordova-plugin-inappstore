@@ -43,7 +43,7 @@ THE SOFTWARE.
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Invalid app store id"];
             } else {
                 // [self.viewController presentViewController:self.storeViewController animated:YES completion:nil];
-                // [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
+                [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
             }
             [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
