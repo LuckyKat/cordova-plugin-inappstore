@@ -26,36 +26,26 @@ THE SOFTWARE.
 
 @implementation CDVInAppStore
 
-@synthesize storeViewController;
-
 - (void)open:(CDVInvokedUrlCommand *)command
 {
     __block CDVPluginResult *pluginResult = nil;
     NSString *appStoreId = [command.arguments objectAtIndex:0];
     
     [self.commandDelegate runInBackground:^{
-        self.storeViewController = [[SKStoreProductViewController alloc] init];
-        self.storeViewController.delegate = self;
+        SKStoreProductViewController *storeViewController = [[SKStoreProductViewController alloc] init];
+        storeViewController.delegate = self;
         NSDictionary *params = [NSDictionary dictionaryWithObject:appStoreId forKey:SKStoreProductParameterITunesItemIdentifier];
         
-        [self.storeViewController loadProductWithParameters:params completionBlock:^(BOOL result, NSError *error) {
+        [storeViewController loadProductWithParameters:params completionBlock:^(BOOL result, NSError *error) {
             if (error) {
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Invalid app store id"];
             } else {
-                // [self.viewController presentViewController:self.storeViewController animated:YES completion:nil];
-                // [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
+                [self.viewController presentViewController:storeViewController animated:YES completion:nil];
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
             }
             [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
         }];
     }];    
-}
-
-- (void)show:(CDVInvokedUrlCommand *)command
-{
-    [self.commandDelegate runInBackground:^{
-        [self.viewController presentViewController:self.storeViewController animated:YES completion:nil];   
-    }];
 }
 
 
