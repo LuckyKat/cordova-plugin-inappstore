@@ -41,6 +41,28 @@ THE SOFTWARE.
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Invalid app store id"];
             } else {
                 [self.viewController presentViewController:storeViewController animated:YES completion:nil];
+                [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+            }
+            [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+        }];
+    }];    
+}
+
+- (void)preload:(CDVInvokedUrlCommand *)command
+{
+    __block CDVPluginResult *pluginResult = nil;
+    NSString *appStoreId = [command.arguments objectAtIndex:0];
+    
+    [self.commandDelegate runInBackground:^{
+        SKStoreProductViewController *storeViewController = [[SKStoreProductViewController alloc] init];
+        storeViewController.delegate = self;
+        NSDictionary *params = [NSDictionary dictionaryWithObject:appStoreId forKey:SKStoreProductParameterITunesItemIdentifier];
+        
+        [storeViewController loadProductWithParameters:params completionBlock:^(BOOL result, NSError *error) {
+            if (error) {
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Invalid app store id"];
+            } else {
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
             }
             [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
