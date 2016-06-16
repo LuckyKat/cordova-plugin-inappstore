@@ -58,6 +58,10 @@ THE SOFTWARE.
     }];
 }
 
+- (BOOL)prefersStatusBarHidden
+{
+    return YES;
+}
 
 # pragma mark - SKStoreProductViewController delegate
 
