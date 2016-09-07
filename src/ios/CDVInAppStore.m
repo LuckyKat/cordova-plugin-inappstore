@@ -54,7 +54,7 @@ THE SOFTWARE.
 {
     [self.commandDelegate runInBackground:^{
         [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
-        [self.viewController presentViewController:self.storeViewController animated:YES completion:nil];   
+        [self.viewController presentViewController:self.storeViewController animated:NO completion:nil];   
     }];
 }
 
