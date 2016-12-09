@@ -37,6 +37,30 @@ THE SOFTWARE.
         self.storeViewController = [[UIInAppStoreNavigationController alloc] init];
         self.storeViewController.delegate = self;
         NSDictionary *params = [NSDictionary dictionaryWithObject:appStoreId forKey:SKStoreProductParameterITunesItemIdentifier];
+        [self.storeViewController loadProductWithParameters:params completionBlock:^(BOOL result, NSError *error) {
+            if (error) {
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Invalid app store id"];
+            } else {
+                // [self.viewController presentViewController:self.storeViewController animated:YES completion:nil];
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+            }
+            [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+        }];
+    }];    
+}
+
+- (void)openWithTokens:(CDVInvokedUrlCommand *)command
+{
+    __block CDVPluginResult *pluginResult = nil;
+    NSString *appStoreId = [command.arguments objectAtIndex:0];
+    NSString *campaignToken = [command.arguments objectAtIndex:1];
+    NSString *providerToken = [command.arguments objectAtIndex:2];
+    
+    [self.commandDelegate runInBackground:^{
+        self.storeViewController = [[UIInAppStoreNavigationController alloc] init];
+        self.storeViewController.delegate = self;
+        NSDictionary *params = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:appStoreId,campaignToken,providerToken,nil]
+                                                  forKeys:[NSArray arrayWithObjects:SKStoreProductParameterITunesItemIdentifier,SKStoreProductParameterCampaignToken,SKStoreProductParameterProviderToken,nil]];
         
         [self.storeViewController loadProductWithParameters:params completionBlock:^(BOOL result, NSError *error) {
             if (error) {
@@ -49,6 +73,7 @@ THE SOFTWARE.
         }];
     }];    
 }
+
 
 - (void)show:(CDVInvokedUrlCommand *)command
 {

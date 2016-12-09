@@ -38,6 +38,7 @@ THE SOFTWARE.
 
 //Public Instance Methods (visible in Cordova API)
 - (void) open:(CDVInvokedUrlCommand *)command;
+- (void) openWithTokens:(CDVInvokedUrlCommand *)command;
 - (void) show:(CDVInvokedUrlCommand *)command;
 
 @end
