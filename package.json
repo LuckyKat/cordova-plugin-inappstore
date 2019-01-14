@@ -2,5 +2,16 @@
   "name": "com.cld.cordova.plugin.inappstore",
   "version": "1.0.0",
   "description": "Cordova InAppStore Plugin",
+  "cordova": {
+    "id": "com.cld.cordova.plugin.inappstore",
+    "platforms": [
+      "ios"
+    ]
+  },
+  "keywords": [
+    "cordova",
+    "inappstore",
+    "storeproduct"
+  ],
   "license": "MIT"
 }
