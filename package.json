@@ -2,17 +2,5 @@
   "name": "com.cld.cordova.plugin.inappstore",
   "version": "1.0.0",
   "description": "Cordova InAppStore Plugin",
-  "repository": {
-    "type": "git",
-    "url": "https://git-wip-us.apache.org/repos/asf/cordova-plugin-inappbrowser.git"
-  },
-  "keywords": [
-    "cordova",
-    "in",
-    "app",
-    "store",
-    "inappstore",
-    "storeproduct"
-  ],
   "license": "MIT"
 }
