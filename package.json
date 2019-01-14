@@ -8,6 +8,10 @@
       "ios"
     ]
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LuckyKat/cordova-plugin-inappstore.git"
+  },
   "keywords": [
     "cordova",
     "inappstore",
