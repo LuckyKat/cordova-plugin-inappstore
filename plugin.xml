@@ -2,7 +2,7 @@
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
            id="com.cld.cordova.plugin.inappstore"
-      version="1.0.0">
+      version="1.0.1">
 
     <name>InAppStore</name>
     <description>Cordova InAppStore Plugin</description>

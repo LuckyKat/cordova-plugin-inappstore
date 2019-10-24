@@ -33,20 +33,18 @@ THE SOFTWARE.
     __block CDVPluginResult *pluginResult = nil;
     NSString *appStoreId = [command.arguments objectAtIndex:0];
     
-    [self.commandDelegate runInBackground:^{
-        self.storeViewController = [[UIInAppStoreNavigationController alloc] init];
-        self.storeViewController.delegate = self;
-        NSDictionary *params = [NSDictionary dictionaryWithObject:appStoreId forKey:SKStoreProductParameterITunesItemIdentifier];
-        [self.storeViewController loadProductWithParameters:params completionBlock:^(BOOL result, NSError *error) {
-            if (error) {
-                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Invalid app store id"];
-            } else {
-                // [self.viewController presentViewController:self.storeViewController animated:YES completion:nil];
-                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-            }
-            [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-        }];
-    }];    
+    self.storeViewController = [[UIInAppStoreNavigationController alloc] init];
+    self.storeViewController.delegate = self;
+    NSDictionary *params = [NSDictionary dictionaryWithObject:appStoreId forKey:SKStoreProductParameterITunesItemIdentifier];
+    [self.storeViewController loadProductWithParameters:params completionBlock:^(BOOL result, NSError *error) {
+        if (error) {
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Invalid app store id"];
+        } else {
+            // [self.viewController presentViewController:self.storeViewController animated:YES completion:nil];
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+        }
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    }];
 }
 
 - (void)openWithTokens:(CDVInvokedUrlCommand *)command
@@ -56,7 +54,8 @@ THE SOFTWARE.
     NSString *campaignToken = [command.arguments objectAtIndex:1];
     NSString *providerToken = [command.arguments objectAtIndex:2];
     
-    [self.commandDelegate runInBackground:^{
+    @try {
+        // experienced multiple crashes here: wrapping it in a try catch block
         self.storeViewController = [[UIInAppStoreNavigationController alloc] init];
         self.storeViewController.delegate = self;
         NSDictionary *params = [NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:appStoreId,campaignToken,providerToken,nil]
@@ -71,16 +70,30 @@ THE SOFTWARE.
             }
             [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
         }];
-    }];    
+    }
+    @catch ( NSException *e ) {
+        NSLog(@"Exception: %@", e);
+        pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Failure"];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    }
+    @finally {
+    }
 }
 
 
 - (void)show:(CDVInvokedUrlCommand *)command
 {
-    [self.commandDelegate runInBackground:^{
+    @try {
         [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
-        [self.viewController presentViewController:self.storeViewController animated:NO completion:nil];   
-    }];
+        [self.viewController presentViewController:self.storeViewController animated:NO completion:nil];
+    }
+    @catch ( NSException *e ) {
+        NSLog(@"Exception: %@", e);
+        CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Failure"];
+        [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    }
+    @finally {
+    }
 }
 
 - (BOOL)prefersStatusBarHidden
